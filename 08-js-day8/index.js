@@ -23,32 +23,43 @@ let isDrawing = false;
 let lastX = 0;
 // 設定位置y為0
 let lastY = 0;
+// hue代表顏色0為初始值
 let hue = 0;
+// direction是一个布尔值（true 或 false），用于控制线条的宽度
+// 它表示线条宽度的增加或减小方向
 let direction = true;
 
 function draw(e) {
     if (!isDrawing) return;
     console.log(e);
+    //  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;設定顏色值
     ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    // beginPath() 方法開始繪製
     ctx.beginPath();
 
+    // 將位置移動至新的x跟y
     ctx.moveTo(lastX, lastY);
-
+    // lineTo由lastX, lastY到現在滑鼠e.offsetX, e.offsetY位置
     ctx.lineTo(e.offsetX, e.offsetY);
+    // stroke() 方法將剛剛從 moveTo 到 lineTo）畫出来
     ctx.stroke();
     [lastX, lastY] = [e.offsetX, e.offsetY];
-
+    // 顏色每次加1
     hue++;
+    // 確保hue的值範圍在360,一開始為0
     if (hue >= 360) {
         hue = 0;
     }
+    // 線的寬度設定在1到100,如果到100則變回1
     if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
         direction = !direction;
     }
 
     if (direction) {
+        // 線條寬度增加
         ctx.lineWidth++;
     } else {
+        // 線條寬度減少
         ctx.lineWidth--;
     }
 
