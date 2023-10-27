@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Fun</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="photobooth">
+        <div class="controls">
+            <button onClick="takePhoto()">Take Photo</button>
+            <div class="rgb">
+                <label for="rmin">Red Min:</label>
+                <input type="range" min=0 max=255 name="rmin">
+                <label for="rmax">Red Max:</label>
+                <input type="range" min=0 max=255 name="rmax">
+
+                <br>
+
+                <label for="gmin">Green Min:</label>
+                <input type="range" min=0 max=255 name="gmin">
+                <label for="gmax">Green Max:</label>
+                <input type="range" min=0 max=255 name="gmax">
+
+                <br>
+
+                <label for="bmin">Blue Min:</label>
+                <input type="range" min=0 max=255 name="bmin">
+                <label for="bmax">Blue Max:</label>
+                <input type="range" min=0 max=255 name="bmax">
+            </div>
+        </div>
+
+        <canvas class="photo"></canvas>
+        <video class="player"></video>
+        <div class="strip"></div>
+    </div>
+</body>
+<!--
+ 出處https://shunnien.github.io/2018/01/09/Javascript30days-19/
+必須先安裝 node.js，之後按照以下的設定，設定 package.json
+由於此篇主題需要伺服器模擬，所以使用了 Browsersync ，其啟動方式透過
+npm start
+或
+browser-sync start --server --files "*.css, *.html, *.js"
+
+-->
+
+</html>
+<script src="index.js"></script>
