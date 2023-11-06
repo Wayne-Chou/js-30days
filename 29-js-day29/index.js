@@ -49,9 +49,9 @@ function displayTimeLeft(seconds) {
     // 計算不足1分鐘剩下的秒數
     const remainderSeconds = seconds % 60;
     // minutes為計算後的分鐘
-    // remainderSeconds < 10 ? '0' : ''如果餘數小於0就加上0在前面確保顯示為2位數
+    // remainderSeconds < 10 ? '0' : ''如果餘數小於10就加上0在前面確保顯示為2位數
     const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
-    // document.title = display;
+
     // 最後將結果顯示在畫面上
     timerDisplay.textContent = display;
 }
@@ -62,21 +62,39 @@ function displayEndTime(timestamp) {
     const end = new Date(timestamp);
     // 透過getHours來取得小時數
     const hour = end.getHours();
+    // 使用3元運算子如果小時大於12就減去12
+    // 例:如果hour為15減去12結果就為下午3點
+    // 例:如果小於12則是hour的值,hour為9則為早上9點
     const adjustedHour = hour > 12 ? hour - 12 : hour;
+    // 透過getMinutes取得分鐘
     const minutes = end.getMinutes();
+    // 最後將結果顯示在畫面上
+    // minutes < 10 ? '0' : ''如果小於10前面加上0確保顯示2位數
     endTime.textContent = `Be Back At ${adjustedHour}:${minutes < 10 ? '0' : ''}${minutes}`;
 }
 
+
+
 function startTimer() {
+    // 將html自訂的data-time資料透過parseInt將字串轉為整數
+    // 在使用dataset來取得值後面接你命名的值,例:data-time後面接time
     const seconds = parseInt(this.dataset.time);
+    // 最後觸發timer function
     timer(seconds);
 }
-
+//按鈕點擊時觸發
 buttons.forEach(button => button.addEventListener('click', startTimer));
+// 使用document接表單名稱監聽是否送出
 document.customForm.addEventListener('submit', function (e) {
+    // 阻止預設行為
     e.preventDefault();
+    // mins儲存使用者輸入的值
+    // minutes為html name的名子
     const mins = this.minutes.value;
     console.log(mins);
+    // 將mins乘上60換成秒數以便計算分鐘
+    // 例:輸入5為(5*60)=300秒為5分鐘
     timer(mins * 60);
+    // 使用js的reset清空表單內容
     this.reset();
 });
