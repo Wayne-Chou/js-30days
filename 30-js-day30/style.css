@@ -69,3 +69,7 @@ h1 {
 .hole.up .mole {
     top: 0;
 }
+
+.btn {
+    text-align: center;
+}
