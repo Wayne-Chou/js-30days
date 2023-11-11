@@ -1,83 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video Speed Scrubber</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
+  <body>
     <div class="wrapper">
-        <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop
-            controls></video>
-        <div class="speed">
-            <div class="speed-bar">1×</div>
-        </div>
+      <video
+        class="flex"
+        width="765"
+        height="430"
+        src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
+        loop
+        controls
+      ></video>
+      <div class="speed">
+        <div class="speed-bar">1×</div>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
 <script>
-  <!DOCTYPE html>
-<html lang="en">
+  // 將各個選擇器儲存在各個變數
+  const speed = document.querySelector(".speed");
+  const bar = speed.querySelector(".speed-bar");
+  const video = document.querySelector(".flex");
+  // Math.round(percent * 100) + '%'、 playbackRate.toFixed(2) + '×
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Speed Scrubber</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+  function handleMove(e) {
+    // e.pageY是滑鼠垂直位置
+    // this.offsetTop等於speed到頂部的距離
+    // e.pageY - this.offsetTop等於滑鼠所在的位置
+    const y = e.pageY - this.offsetTop;
+    // 計算百分比
+    // 滑鼠所在位置去除以speed的高度
+    const percent = y / this.offsetHeight;
+    // 最慢速度
+    const min = 0.4;
+    // 最大速度
+    const max = 4;
+    // 高度夠過Math.round乘上100加上趴數取得百分比
+    const height = Math.round(percent * 100) + "%";
+    // 計算最大到最小範圍
+    const playbackRate = percent * (max - min) + min;
+    // speed-bar的高度等於計算百分比後的數值
+    bar.style.height = height;
+    // 將計算取小數點第2位
+    // toFixed用法https://www.runoob.com/jsref/jsref-tofixed.html
+    bar.textContent = playbackRate.toFixed(2) + "×";
+    // HTMLMediaElement.playbackRate,属性设置媒体文件播放时的速率
+    // 出處https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement/playbackRate
+    // 最後更新資訊
+    video.playbackRate = playbackRate;
+  }
 
-<body>
-    <div class="wrapper">
-        <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop
-            controls></video>
-        <div class="speed">
-            <div class="speed-bar">1×</div>
-        </div>
-    </div>
-</body>
-
-</html>
-<script>
-    // 將各個選擇器儲存在各個變數
-    const speed = document.querySelector('.speed');
-    const bar = speed.querySelector('.speed-bar');
-    const video = document.querySelector('.flex');
-    // Math.round(percent * 100) + '%'、 playbackRate.toFixed(2) + '×
-  
-
-    function handleMove(e) {
-        // e.pageY是滑鼠垂直位置
-        // this.offsetTop等於speed到頂部的距離
-        // e.pageY - this.offsetTop等於滑鼠所在的位置
-        const y = e.pageY - this.offsetTop;
-        // 計算百分比
-        // 滑鼠所在位置去除以speed的高度
-        const percent = y / this.offsetHeight;
-        // 最慢速度
-        const min = 0.4;
-        // 最大速度
-        const max = 4;
-        // 高度夠過Math.round乘上100加上趴數取得百分比
-        const height = Math.round(percent * 100) + '%';
-        // 計算最大到最小範圍
-        const playbackRate = percent * (max - min) + min;
-        // speed-bar的高度等於計算百分比後的數值
-        bar.style.height = height;
-        // 將計算取小數點第2位
-        // toFixed用法https://www.runoob.com/jsref/jsref-tofixed.html
-        bar.textContent = playbackRate.toFixed(2) + '×';
-        // HTMLMediaElement.playbackRate,属性设置媒体文件播放时的速率
-        // 出處https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement/playbackRate
-        // 最後更新資訊
-        video.playbackRate = playbackRate;
-    }
-
-    // 透過滑鼠移動觸發funtion
-    speed.addEventListener('mousemove', handleMove);
-
-</script>
+  // 透過滑鼠移動觸發funtion
+  speed.addEventListener("mousemove", handleMove);
 </script>
