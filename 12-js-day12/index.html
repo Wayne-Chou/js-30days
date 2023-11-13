@@ -9,24 +9,37 @@
 </head>
 
 <body>
-     輸入wesbos看畫面結果 
+    輸入wesbos看畫面結果
 
 </body>
 
 </html>
 <script>
+    // 設定空陣列
     const pressed = [];
+    // 設定密碼
     const secretCode = "wesbos";
 
+    // 監聽鍵盤輸入的字
     window.addEventListener("keyup", (e) => {
+        // 印出
         console.log(e.key);
+        // 將輸入的字放到空陣列
         pressed.push(e.key);
+        // 透過splice移除或新增元素
+        // 假設pressed數組 is['x', 'y', 'z', 'w', 'e', 's', 'b', 'o', 's']和secretCode.lengthis 6
+        // 起始索引：-secretCode.length - 1 = -6 - 1 = -7
+        // 要刪除的元素數量：pressed.length - secretCode.length = 9 - 6 = 3
+        // 該splice操作將從第 7 個位置開始刪除元素（-7在 JavaScript 中指的是從末尾算起的第 7 個位置）
+        // 並且它將刪除 3 個元素。執行此操作後，pressed陣列將僅包含最後一個secretCode.length元素：['w', 'e', 's', 'b', 'o', 's']。
         pressed.splice(
             -secretCode.length - 1,
             pressed.length - secretCode.length
         );
+        // 轉換為字串並且檢查是否包含密碼
         if (pressed.join("").includes(secretCode)) {
             console.log("DING DING!");
+            // 最後在後台呼叫函數
             cornify_add();
         }
         console.log(pressed);
